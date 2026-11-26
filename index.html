@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ultimate Rizz + Гатанки</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #12121a;
+      --bg-card-hover: #1a1a25;
+      --text: #f0f0f5;
+      --text-muted: #9a9aad;
+      --accent: #ff2d6a;
+      --accent-2: #a855f7;
+      --accent-3: #22d3ee;
+      --border: #2a2a38;
+      --success: #34d399;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: -30%; left: -20%;
+      width: 70%; height: 70%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -20%; right: -10%;
+      width: 60%; height: 60%;
+      background: radial-gradient(circle, rgba(255, 45, 106, 0.1) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+      position: relative;
+      z-index: 1;
+    }
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 0 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+    .main-tabs {
+      display: flex;
+      gap: 6px;
+      background: var(--bg-card);
+      padding: 5px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+    }
+    .main-tab {
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .main-tab:hover { color: var(--text); }
+    .main-tab.active {
+      background: linear-gradient(135deg, rgba(255,45,106,0.2), rgba(168,85,247,0.2));
+      color: var(--text);
+      box-shadow: 0 0 0 1px rgba(255,45,106,0.35);
+    }
+    .lang-switch {
+      display: flex;
+      gap: 4px;
+      background: var(--bg-card);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .lang-btn {
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover { color: var(--text); }
+    .lang-btn.active {
+      background: var(--accent-2);
+      color: white;
+    }
+    header { text-align: center; padding: 36px 0 28px; }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 5.5vw, 3.2rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent-3) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+    .tagline {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .generator {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px;
+      margin-bottom: 32px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.08);
+    }
+    .generator-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-2);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    #random-line {
+      font-size: clamp(1.1rem, 3.2vw, 1.4rem);
+      font-weight: 600;
+      line-height: 1.4;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      padding: 0 8px;
+      transition: opacity 0.2s;
+    }
+    .gen-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      padding: 14px 28px;
+      box-shadow: 0 4px 20px rgba(255, 45, 106, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(255, 45, 106, 0.4);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 13px 22px;
+    }
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-2);
+    }
+    .btn-copy {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      border-radius: 8px;
+      opacity: 0.75;
+      flex-shrink: 0;
+    }
+    .btn-copy:hover {
+      opacity: 1;
+      color: var(--accent-3);
+      border-color: var(--accent-3);
+    }
+    .btn-copy.copied {
+      color: var(--success);
+      border-color: var(--success);
+      opacity: 1;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      background: var(--bg-card);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 999px;
+      white-space: nowrap;
+      font-size: 0.9rem;
+    }
+    .tab:hover { color: var(--text); border-color: #3a3a4a; }
+    .tab.active {
+      background: linear-gradient(135deg, rgba(255,45,106,0.15), rgba(168,85,247,0.15));
+      color: var(--text);
+      border-color: var(--accent);
+    }
+    .lines-grid { display: grid; gap: 12px; }
+    .line-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 18px 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: all 0.2s ease;
+      animation: fadeIn 0.35s ease both;
+    }
+    .line-card:hover {
+      background: var(--bg-card-hover);
+      border-color: #3a3a4a;
+      transform: translateY(-1px);
+    }
+    .line-text { font-size: 1rem; font-weight: 500; flex: 1; }
+    .riddle-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 22px 18px;
+      margin-bottom: 14px;
+      transition: all 0.2s;
+      animation: fadeIn 0.35s ease both;
+    }
+    .riddle-card:hover { border-color: #3a3a4a; }
+    .riddle-q {
+      font-size: 1.05rem;
+      font-weight: 560;
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+    .riddle-answer-wrap {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.35s ease, opacity 0.25s;
+      opacity: 0;
+    }
+    .riddle-card.open .riddle-answer-wrap {
+      max-height: 80px;
+      opacity: 1;
+    }
+    .riddle-answer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: rgba(52, 211, 153, 0.08);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      border-radius: 10px;
+      color: var(--success);
+      font-weight: 600;
+    }
+    .btn-reveal {
+      background: transparent;
+      color: var(--accent-3);
+      border: 1px solid rgba(34, 211, 238, 0.35);
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      border-radius: 9px;
+    }
+    .btn-reveal:hover {
+      background: rgba(34, 211, 238, 0.1);
+      border-color: var(--accent-3);
+    }
+    .riddle-card.open .btn-reveal { display: none; }
+    .section { display: none; }
+    .section.active { display: block; }
+    footer {
+      text-align: center;
+      padding: 48px 20px 24px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    footer span { color: var(--accent); }
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #1f1f2e;
+      color: var(--success);
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 560px) {
+      .top-bar { flex-direction: column; align-items: stretch; }
+      .main-tabs { width: 100%; justify-content: center; }
+      .lang-switch { align-self: flex-end; }
+      header { padding: 28px 0 20px; }
+      .generator { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-bar">
+      <div class="main-tabs">
+        <button class="main-tab active" data-section="rizz" id="tab-rizz">Rizz Lines</button>
+        <button class="main-tab" data-section="riddles" id="tab-riddles">Гатанки</button>
+      </div>
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="mk" id="lang-mk">МК</button>
+        <button class="lang-btn" data-lang="en" id="lang-en">EN</button>
+      </div>
+    </div>
+
+    <div class="section active" id="section-rizz">
+      <header>
+        <h1 class="logo">Ultimate Rizz</h1>
+        <p class="tagline" id="tagline">Најглатките, најсмешните и најдобрите линии за да го кренеш нивото.</p>
+      </header>
+      <section class="generator">
+        <div class="generator-label" id="gen-label">Случаен Риз</div>
+        <div id="random-line">Кликни за нова линија</div>
+        <div class="gen-buttons">
+          <button class="btn-primary" onclick="generateRandom()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-9-9c2.5 0 4.8 1 6.5 2.7"/><path d="M21 3v6h-6"/></svg>
+            <span id="btn-hit">Удри</span>
+          </button>
+          <button class="btn-secondary" onclick="copyRandom()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span id="btn-copy-rand">Копирај</span>
+          </button>
+        </div>
+      </section>
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-cat="all" id="cat-all">Сите</button>
+        <button class="tab" data-cat="smooth" id="cat-smooth">Глатки</button>
+        <button class="tab" data-cat="funny" id="cat-funny">Смешни</button>
+        <button class="tab" data-cat="cheesy" id="cat-cheesy">Кичеви</button>
+        <button class="tab" data-cat="modern" id="cat-modern">Модерни</button>
+        <button class="tab" data-cat="text" id="cat-text">За пораки</button>
+      </div>
+      <div class="lines-grid" id="lines-grid"></div>
+    </div>
+
+    <div class="section" id="section-riddles">
+      <header>
+        <h1 class="logo">Гатанки</h1>
+        <p class="tagline" id="riddles-tagline">Класични македонски народни гатанки. Кликни за да го видиш одговорот.</p>
+      </header>
+      <div id="riddles-grid"></div>
+    </div>
+  </div>
+
+  <footer>
+    <span id="footer-text">Направено со <span>♥</span> за максимален риз · Користи одговорно</span><br>
+    <em style="display:inline-block; margin-top:10px; color:var(--text-muted); font-size:0.9rem;">Made by Бојан Јовановски</em>
+  </footer>
+  <div class="toast" id="toast">Копирано!</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
